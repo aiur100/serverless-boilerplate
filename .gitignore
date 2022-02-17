@@ -1,0 +1,4 @@
+node_modules
+.serverless
+my-dynamodb-data
+.DS_Store

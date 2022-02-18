@@ -1,4 +1,4 @@
-# Work-Load
+# Serverless Boiler-plate
 
 ## Local Development
 
@@ -18,3 +18,10 @@
 ### Local testing
 * Uses mocha for testing
 * `npm run test`
+
+
+## TODO
+* Create a password storage flow. 
+* Create a fake endpoint that is protected by authorization. 
+* Figure out how to add local s3 service 
+  * Possibly this https://docs.localstack.cloud/get-started/#docker

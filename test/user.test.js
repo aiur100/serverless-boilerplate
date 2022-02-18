@@ -6,8 +6,7 @@ const assert = require("assert");
 describe("user management", function () {
 
   const testUser = {
-   // userId: "1234",
-   userId:1,
+    userId: "1234",
     name: "Christopher Hill",
   }
 

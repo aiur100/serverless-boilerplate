@@ -7,7 +7,7 @@
     "dev": "npx nodemon ./api/handler.js",
     "local-cf": "./local.sh up",
     "local-down": "./local.sh down",
-    "dev-deploy": "npm run sls deploy --stage dev",
+    "dev-deploy": "sls deploy --stage dev && node deploy.js dev",
     "test": "mocha"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "dotenv": "^16.0.0",
     "mocha": "^9.2.0",
     "nodemon": "^2.0.15",
+    "s3-folder-upload": "^2.3.5",
     "serverless": "^3.2.1"
   }
 }

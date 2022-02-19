@@ -1,4 +1,4 @@
-service: work-load
+service: ${file(./.env.${sls:stage}.json):SERVICE_NAME}
 frameworkVersion: '3'
 	
 # New syntax
@@ -9,13 +9,23 @@ package:
     - node_modules/*
     - node_modules/**
     - '!node_modules/aws-sdk'
+    - '!node_modules/dotenv'
+    - '!node_modules/mocha'
+    - '!node_modules/nodemon'
+    - '!node_modules/serverless'
     - '!.serverless/*'
     - '!.serverless/**'
     - '!*.yml'
     - '!*.md'
     - '!.env'
+    - '!vue-app/*'
+    - '!vue-app/**'
+    - '!vue-app'
     - '!my-dynamodb-data/*'
     - '!my-dynamodb-data/**'
+    - '!local.sh'
+    - '!*.json'
+    - '.gitignore'
 
 
 custom:
@@ -26,7 +36,7 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: dev
-  profile: pasley_hill_admin
+  profile: ${file(./.env.${sls:stage}.json):PROFILE}
   architecture: arm64
   iam:
     role:
@@ -61,16 +71,21 @@ resources:
           - AttributeName: userId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
-        TableName: ${self:custom.tableName}
-    PhotoOverlayBucket:
+        TableName: ${self:provider.environment.USERS_TABLE}
+    SpaSiteBucket:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:custom.photoBucket}
+        BucketName: ${self:provider.environment.STATIC_BUCKET}
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: error.html
         CorsConfiguration:
           CorsRules:
             - AllowedHeaders:
                 - "*"
               AllowedMethods:
+                - GET
                 - PUT
                 - POST
                 - DELETE
@@ -80,7 +95,10 @@ resources:
                 - "x-amz-server-side-encryption"
                 - "x-amz-request-id"
                 - "x-amz-id-2"
-              Id: RLECors
+              Id: SpaSiteBucket
               MaxAge: 3000
         VersioningConfiguration:
           Status: "Enabled"
+  Outputs:
+    SpaSSiteBucketOutputKey:
+      Value: !Ref SpaSiteBucket

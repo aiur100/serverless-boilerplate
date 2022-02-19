@@ -19,6 +19,7 @@ package:
 
 custom:
   tableName: 'users-table-${sls:stage}'
+  photoBucket: 'test-photo-${sls:stage}'
 
 provider:
   name: aws
@@ -63,3 +64,25 @@ resources:
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
         TableName: ${self:custom.tableName}
+    PhotoOverlayBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.photoBucket}
+        CorsConfiguration:
+          CorsRules:
+            - AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - PUT
+                - POST
+                - DELETE
+              AllowedOrigins:
+                - "*"
+              ExposedHeaders:
+                - "x-amz-server-side-encryption"
+                - "x-amz-request-id"
+                - "x-amz-id-2"
+              Id: RLECors
+              MaxAge: 3000
+        VersioningConfiguration:
+          Status: "Enabled"

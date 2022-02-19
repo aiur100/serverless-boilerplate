@@ -24,9 +24,10 @@ definition in `serverless.yml` locally.
 * Run `npm install`
 
 ### Start Local Development
-* In one terminal screen, run `npm run local-up`
+* Run `npm run local-up`
   - This will start the local AWS Stack (LocalStack)
-  - Run the 
+  - This will then run the Cloud Formation on that stack.
+  - **You should run this anytime you add a resource to `serverless.yml`**
 * Then run `npm run dev` 
   - This will start the local NodeJS Express Server. 
 * Visit http://localhost:3000/v1/api/health

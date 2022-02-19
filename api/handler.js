@@ -44,6 +44,7 @@ if(STAGE === LOCAL){
 app.use((req, res, next) => {
   req.logger = log;
   req.dynamoDbClient = new AWS.DynamoDB.DocumentClient(AWS_CONFIG);
+  req.s3Client = new AWS.S3(AWS_CONFIG);
   req.USERS_TABLE = process.env.USERS_TABLE;
   next();
 });

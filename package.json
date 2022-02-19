@@ -5,7 +5,7 @@
   "scripts": {
     "sls": "serverless",
     "dev": "npx nodemon ./api/handler.js",
-    "local-up": "./local.sh up && npm run dev",
+    "local-cf": "./local.sh up",
     "local-down": "./local.sh down",
     "dev-deploy": "npm run sls deploy --stage dev",
     "test": "mocha"

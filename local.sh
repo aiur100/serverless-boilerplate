@@ -6,7 +6,7 @@ export AWS_URL="http://localhost:4566"
 case $1 in
     up)
         docker-compose up -d
-        npm run sls package --stage 'local'
+        sls package --stage 'local'
         aws cloudformation create-stack \
                                 --endpoint-url $AWS_URL \
                                 --stack-name local-stack \

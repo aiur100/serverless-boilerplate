@@ -22,24 +22,28 @@ if(LOCAL === STAGE){
 const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
-const log = require("lambda-log");
+const log = require("lambda-log"); 
 
 const PORT = process.env.PORT ?? 3000;
 log.options.dev = true;
 const app = express();
 
+const AWS_CONFIG = {
+  region: process.env.REGION
+};
+
+if(STAGE === LOCAL){
+  AWS_CONFIG.endpoint = process.env.AWS_URL;
+}
+
 /**
  * Load the DynamoDB client
  * - Locally, use the locally running docker image of DynamoDB
  */
-const dynamoDbClient =
-  STAGE === LOCAL
-    ? new AWS.DynamoDB.DocumentClient({ endpoint: "http://localhost:8000", region: process.env.REGION })
-    : new AWS.DynamoDB.DocumentClient();
 
 app.use((req, res, next) => {
   req.logger = log;
-  req.dynamoDbClient = dynamoDbClient;
+  req.dynamoDbClient = new AWS.DynamoDB.DocumentClient(AWS_CONFIG);
   req.USERS_TABLE = process.env.USERS_TABLE;
   next();
 });

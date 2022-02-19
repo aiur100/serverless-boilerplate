@@ -67,7 +67,7 @@ router.post("/", async function (req, res) {
       res.status(409).json({ error: `User ${userId} already exists` });
     } else {
       console.log(error);
-      res.status(500).json({ error: "Could not create user", e: error});
+      res.status(500).json({ error: "Could not create user", "users":req.USERS_TABLE,e: error});
     }
   }
 });

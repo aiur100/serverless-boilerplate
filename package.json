@@ -7,6 +7,7 @@
     "dev": "npx nodemon ./api/handler.js",
     "local-up": "./local.sh up && npm run dev",
     "local-down": "./local.sh down",
+    "dev-deploy": "npm run sls deploy --stage dev",
     "test": "mocha"
   },
   "dependencies": {

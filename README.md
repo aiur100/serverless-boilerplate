@@ -32,6 +32,9 @@ definition in `serverless.yml` locally.
 * Visit http://localhost:3000/v1/api/health
   - This should respond `{"version":"0.1.0"}`
 
+### Bring the Local Development Environment Down When You Are Down
+### `npm run local-down`
+
 ### Local testing
 * Uses mocha for testing
 * Tests are in the `test` directory

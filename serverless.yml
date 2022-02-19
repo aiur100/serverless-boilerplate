@@ -17,6 +17,7 @@ package:
     - '!my-dynamodb-data/*'
     - '!my-dynamodb-data/**'
 
+
 custom:
   tableName: 'users-table-${sls:stage}'
   photoBucket: 'test-photo-${sls:stage}'

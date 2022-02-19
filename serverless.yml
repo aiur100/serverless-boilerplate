@@ -41,10 +41,7 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - Fn::GetAtt: [ UsersTable, Arn ]
-  environment:
-    STAGE: ${sls:stage}
-    USERS_TABLE: ${self:custom.tableName}
-    REGION: "us-east-1"
+  environment: ${file(./.env.${sls:stage}.json)}
 
 functions:
   api:

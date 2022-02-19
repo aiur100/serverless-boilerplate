@@ -2,3 +2,6 @@ node_modules
 .serverless
 my-dynamodb-data
 .DS_Store
+*/node_modules/*
+.env.*.json
+!.env.local.json

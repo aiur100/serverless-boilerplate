@@ -42,8 +42,13 @@ definition in `serverless.yml` locally.
 * Run tests: `npm run test`
 
 
+## Production / Stage Deployment
+* A `.env.<stage>.json` is required. 
+
 ## TODO
 * Create a password storage flow. 
 * Create a fake endpoint that is protected by authorization. 
+* Create a command that starts up the *whole* environment
+* Create a seperate command that just updates the stack
 * DONE - Figure out how to add local s3 service 
   * DONE - Possibly this https://docs.localstack.cloud/get-started/#docker

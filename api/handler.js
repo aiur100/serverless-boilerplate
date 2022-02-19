@@ -16,15 +16,13 @@ const STAGE = process.env.STAGE ?? LOCAL;
 const VERSION = "0.1.0";
 
 if(LOCAL === STAGE){
-  require('dotenv').config();
+  process.env = { ...process.env, ...(require("../.env.local.json")) }
 }
 
 const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
 const log = require("lambda-log"); 
-
-const PORT = process.env.PORT ?? 3000;
 log.options.dev = true;
 const app = express();
 
@@ -50,10 +48,16 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+
+/**
+ * API Routes
+ * ------------------------
+ */
 app.use("/api/v1/users", require("./v1/users"));
 app.get("/api/v1/health", (req, res, next) => {
-  res.json({ version: VERSION });
+  res.json({ version: VERSION, stage: STAGE, env: process.env });
 })
+
 
 app.use((req, res, next) => {
   return res.status(404).json({
@@ -61,8 +65,10 @@ app.use((req, res, next) => {
   });
 });
 
+// if local, run a normal server, if deployed, use the serverless function
 if (STAGE !== LOCAL) {
   module.exports.handler = serverless(app);
 } else {
+  const PORT = process.env.API_PORT ?? 3000;
   app.listen(PORT);
 }

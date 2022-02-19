@@ -45,5 +45,5 @@ definition in `serverless.yml` locally.
 ## TODO
 * Create a password storage flow. 
 * Create a fake endpoint that is protected by authorization. 
-* Figure out how to add local s3 service 
-  * Possibly this https://docs.localstack.cloud/get-started/#docker
+* DONE - Figure out how to add local s3 service 
+  * DONE - Possibly this https://docs.localstack.cloud/get-started/#docker

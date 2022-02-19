@@ -12,7 +12,7 @@
         <hr class="m-3" />
 
         <div class="card-body">
-          
+          {{ this.health }}
         </div>
       </div>
     </div>
@@ -31,11 +31,13 @@ export default {
     return {
       user: null,
       pk: null,
-      sk: null
+      sk: null,
+      health: null,
     };
   },
   async beforeMount() {
-    // here
+    const result = await fetch("http://localhost:3001/api/v1/health").then(r => r.json());
+    this.health = result;
   },
 };
 </script>

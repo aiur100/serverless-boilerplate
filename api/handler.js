@@ -22,6 +22,7 @@ if(LOCAL === STAGE){
 const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
+const cors = require('cors')
 const log = require("lambda-log"); 
 log.options.dev = true;
 const app = express();
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
+app.use(cors());
 
 /**
  * API Routes

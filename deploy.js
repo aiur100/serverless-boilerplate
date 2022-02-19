@@ -13,6 +13,7 @@ console.log(process.env.SERVICE_NAME);
 
 const uploadDir = function(s3Path, bucketName) {
 
+    const mime = require('mime-types')
     let s3 = new AWS.S3();
 
     function walkSync(currentDirPath, callback) {
@@ -34,9 +35,9 @@ const uploadDir = function(s3Path, bucketName) {
             Bucket: bucketName, 
             Key: Key, 
             Body: fs.readFileSync(path.resolve(__dirname, filePath),"utf-8"), 
-            ACL: "public-read"
+            ACL: "public-read",
+            ContentType: mime.lookup(filePath)
         };
-        console.log(path.resolve(__dirname, filePath),params);
         s3.putObject(params, function(err, data) {
             if (err) {
                 console.log(err)

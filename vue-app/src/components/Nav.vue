@@ -49,6 +49,7 @@ export default {
   },
   async beforeMount() {
     //test
+    console.log("USER",this.$userManager);
   },
   methods: {
     async logOut() {

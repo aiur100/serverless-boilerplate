@@ -7,6 +7,7 @@ case $1 in
     up)
         docker-compose up -d
         sls package --stage 'local'
+        sls deploy --stage 'local' --config 'local.yml'
         aws cloudformation create-stack \
                                 --endpoint-url $AWS_URL \
                                 --stack-name local-stack \

@@ -6,7 +6,7 @@
     "sls": "serverless",
     "dev": "npx nodemon ./api/handler.js",
     "local-up": "./local.sh up",
-    "local-down": "./local.sh down",
+    "local-down": "./local.sh down && sls remove --stage 'local' --config 'local.yml'",
     "local-serve": "concurrently --kill-others \"npm run dev\" \"cd vue-app && npm run dev\"",
     "dev-deploy": "sls deploy --stage dev && node deploy.js dev",
     "prod-deploy": "sls deploy --stage prod && node deploy.js prod",

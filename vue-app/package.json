@@ -7,6 +7,7 @@
     "build": "vue-cli-service build --mode production"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^5.2.6",
     "bootstrap": "^5.1.3",
     "vue": "^3.2.25",
     "vue-router": "^4.0.12"

@@ -57,9 +57,10 @@ definition in `serverless.yml` locally.
 
 
 ## Production / Stage Deployment
-* A `.env.<stage>.json` is required for the stage you are deploying to. 
+* **REQUIRED:** A `.env.<stage>.json` is required for the stage you are deploying to. 
 * Deploying to a *dev* environment. 
   * `npm run dev-deploy`
+  * `npm run prod-deploy`
 
 ## TODO
 * Create a password storage flow. 
@@ -67,6 +68,7 @@ definition in `serverless.yml` locally.
 * DONE Create a command that starts up the *whole* environment
 * DONE - Figure out how to add local s3 service 
   * DONE - Possibly this https://docs.localstack.cloud/get-started/#docker
+* Create a remove stack flow
 
 ## Deployment flow
 * Deploy CF stack 

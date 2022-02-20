@@ -8,6 +8,9 @@
     "local-up": "./local.sh up",
     "local-down": "./local.sh down",
     "dev-deploy": "sls deploy --stage dev && node deploy.js dev",
+    "prod-deploy": "sls deploy --stage prod && node deploy.js prod",
+    "dev-remove": "node deploy.js dev remove && sls remove --stage dev",
+    "prod-remove": "node deploy.js prod remove && sls remove --stage prod",
     "web-build": "cd vue-app && npm run build",
     "test": "mocha"
   },

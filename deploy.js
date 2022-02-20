@@ -1,3 +1,27 @@
+/**
+ * --------------------------------------------------------
+ * WARNING
+ * --------------------------------------------------------
+ *
+ *
+ * DO NOT CHANGE unless you know what you are doing.
+ *
+ *
+ *
+ *
+ * This script is not a part of your project.
+ * This is the POST deployment process that
+ * uploads your vue-app to S3 and handles other
+ * requirements.
+ *
+ *
+ *
+ * DO NOT CHANGE unless you know what you are doing.
+ *
+ *
+ *
+ * --------------------------------------------------------
+ */
 const AWS = require("aws-sdk");
 const path = require("path");
 const fetch = (...args) =>
@@ -5,13 +29,10 @@ const fetch = (...args) =>
 const fs = require("fs");
 const assert = require("assert");
 const variables = require(`./.env.${process.argv[2]}.json`);
-
 const credentials = new AWS.SharedIniFileCredentials({
   profile: variables.PROFILE,
 });
 AWS.config.credentials = credentials;
-
-console.log("POST DEPLOYMENT OPERATIONS FOR SERVICE: ", variables.SERVICE_NAME);
 
 /**
  * This function will upload
@@ -62,36 +83,80 @@ const uploadDir = function (s3Path, bucketName) {
  * This function actually runs an npm command
  * on the web app, running the build process for production
  * so that the vue-app/dist folder is populated with source code
- * that we can deploy 
- * 
- * @returns 
+ * that we can deploy
+ *
+ * @returns
  */
 const runBuild = () => {
-    return new Promise((resolve,reject) => {
-         const { spawn } = require('child_process');
-         const job = spawn('npm', ['run','web-build']);
-         
-         job.stdout.on('data', (data) => {
-             console.log(`stdout: ${data}`);
-         });
-         
-         job.stderr.on('data', (data) => {
-             console.error(`stderr: ${data.toString('utf8')}`);
-             //return reject(data.toString('utf8'));
-         });
-         
-         job.on('close', (code) => {
-             console.log(`child process exited with code ${code}`);
-             return resolve(code);
-         });
+  return new Promise((resolve, reject) => {
+    const { spawn } = require("child_process");
+    const job = spawn("npm", ["run", "web-build"]);
+
+    job.stdout.on("data", (data) => {
+      console.log(`stdout: ${data}`);
     });
- }
+
+    job.stderr.on("data", (data) => {
+      console.error(`stderr: ${data.toString("utf8")}`);
+      //return reject(data.toString('utf8'));
+    });
+
+    job.on("close", (code) => {
+      console.log(`child process exited with code ${code}`);
+      return resolve(code);
+    });
+  });
+};
+
+async function clearBucket(Bucket) {
+  try {
+    const s3 = new AWS.S3();
+
+    const objects = await s3.listObjects({ Bucket }).promise();
+    const clearBucket =
+      objects.Contents &&
+      Array.isArray(objects.Contents) &&
+      objects.Contents.length > 0;
+
+    if (clearBucket) {
+      console.info("Bucket contains content. Deleting all objects...");
+      await Promise.all(
+        objects.Contents.map(async (s3Object) => {
+          await s3
+            .deleteObject({
+              Bucket,
+              Key: s3Object.Key,
+            })
+            .promise();
+          console.info(s3Object.Key + " was deleted");
+        })
+      );
+      console.info("Bucket cleared successfully!");
+    }
+
+    return true;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+}
 
 /**
  * Main routine
  *
  */
 (async function () {
+
+  if (process.argv[3] === "remove") {
+    console.log("REMOVING STACK -", "SERVICE: " + variables.SERVICE_NAME);
+    await clearBucket(variables.STATIC_BUCKET);
+    return;
+  }
+
+  console.log(
+    "POST DEPLOYMENT OPERATIONS FOR SERVICE: ",
+    variables.SERVICE_NAME
+  );
+
   // if no API URL is provided,
   // this means we are not using a custom domain in the configuration,
   // therefore, we need to determine what the API URL truly is and use
@@ -109,7 +174,11 @@ const runBuild = () => {
     const URL = `${BASE_URL}/health`;
     const healthResponse = await fetch(URL).then((r) => r.json());
     // visit the API health check and determine if it is indeed online
-    assert.deepEqual(healthResponse.stage,variables.STAGE,`${variables.STAGE} is not ${healthResponse.stage}`);
+    assert.deepEqual(
+      healthResponse.stage,
+      variables.STAGE,
+      `${variables.STAGE} is not ${healthResponse.stage}`
+    );
     variables.API_URL = BASE_URL;
   }
 
@@ -123,10 +192,10 @@ const runBuild = () => {
 
   await runBuild();
   uploadDir("./vue-app/dist/", variables.STATIC_BUCKET);
+
   console.log(`
     Deployment successful!
     Visit Web App: http://${variables.STATIC_BUCKET}.s3-website-${variables.REGION}.amazonaws.com/
     Visit API Health Check: ${variables.API_URL}/health
-  `)
-
+  `);
 })();

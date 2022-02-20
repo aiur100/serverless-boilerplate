@@ -1,31 +1,49 @@
 # Serverless Boiler-plate
 
-Clone this project to start a new serverless API + VUE app. 
-Just update the .env.local.json file to get started by inputing
-your `SERVICE_NAME`, whatever you are all calling your project, and
-your `AWS_PROFILE` should match the AWS creds you want to use, i.e. the 
-AWS account you are using. 
+I made this for myself so I don't have to keep re-inventing
+this process every time.
 
-If you don't know what I mean by `AWS_PROFILE` then you need to 
-look up the AWS CLI. 
+Clone this project to start a new serverless API + VUE app.
+Develop locally with ease, and deploy your entire stack to 
+AWS with a single command without having to set-up all the resources.
 
-I appreciate AWS Amplify and other services that help 
-speed up the development/POC process. However, I want my own 
-thing that allows me to start up a typical serverless API + SPA 
-stack. 
+Using the power of serverless framework, Docker and the AWS CLI, 
+I make my life easier.
+
+**I know, I know:** I appreciate AWS Amplify and other services that help 
+speed up the development/POC process, but I want a lot more 
+control.
 
 The emphasis for this project is creating a great 
-*local development experience*. 
+*local development experience* for myself.
 
 * This is meant to be deployed using the serverless framework. 
 * **Local dev** we use the serverless framework `serverless.yml` to define local stacks.
   * https://www.serverless.com/framework
 
-## Clone, Rename and Go
-* `git clone https://github.com/aiur100/serverless-boilerplate.git`
-* `mv serverless-boilerplate <your-app-name>`
-* `cd <your-app-name>`
-* Remove association to *this* git repo `rm -rf .git`
+### Requirements
+* AWS CLI
+* Docker
+* NodeJS 14+
+* Globally installed serverless framework
+  * If you don't have it, run `npm install -g serverless`
+
+### Stacks on Stacks
+* Vue3
+* Express
+* DynamoDB 
+* S3 
+* Lambda
+
+## Quick Start
+
+If you have all the requirements installed locally, you can 
+follow this quick start guide.
+
+* #### `git clone https://github.com/aiur100/serverless-boilerplate.git`
+* #### `mv serverless-boilerplate <your-app-name> && cd <your-app-name>`
+* #### Remove association to **this** git repo `rm -rf .git`
+* #### Start Local Environment `npm run local-up`
 
 ## Local Development
 
@@ -33,16 +51,12 @@ Local development uses *LocalStack* to host an AWS Cloud.
 We will compile the `serverless framework`  cloudformation
 definition in `serverless.yml` locally. 
 
-### Requirements
-* AWS CLI
-* Docker
-* NodeJS 14+
-* Run `npm install`
-
 ### Start Local Development
-* Update your `.env.local.json` file with your service name - SERVICE_NAME
-* Update your `.env.local.json` file with the name of your AWS profile name.  
-  * This is configured and named in ~/.aws/credentials
+1. Update your `.env.local.json` file by changing the values for these keys.
+  * `SERVICE_NAME` - The name of your service with no spaces. 
+  * `WEB_APP_NAME` - The name of your web app (spaces encouraged)
+  * `AWS_PROFILE` - The name of your AWS CLI profile. Defaults to `default`.   
+    * This is configured and named in ~/.aws/credentials
 * Run `npm run local-up`
   - This will start the local AWS Stack (LocalStack)
   - This will then run the Cloud Formation on that stack.

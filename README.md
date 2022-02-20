@@ -77,11 +77,18 @@ definition in `serverless.yml` locally.
 
 
 ## Production / Stage Deployment
-* **REQUIRED:** A `.env.<stage>.json` is required for the stage you are deploying to and should have 
+* **REQUIRED:** 
+  * A `.env.<stage>.json` is required for the stage you are deploying to and should have 
   variables the pertaining to that stage.  
-* Deploying to a *stage* environment. 
+  * *Copy* the `.env.local.json` file to your `.env.<stage>.json` and 
+  make changes so that you have unique stage variable values where needed. 
+  * i.e. You should have a different
+  `STATIC_BUCKET` value per environment. You can usually just prefix with `dev-`.
+* Once you have your Environment variable file configured, Deploying to a *stage* environment. 
   * **DEV** `npm run dev-deploy`
   * **PROD** `npm run prod-deploy`
+  * These are the only two stages right now.  If you want another one, just create a new script in `package.json` and emulate 
+    the above two scripts.
 
 ## TODO
 * Create a password storage flow. 

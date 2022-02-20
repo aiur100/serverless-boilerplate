@@ -21,6 +21,12 @@ The emphasis for this project is creating a great
 * **Local dev** we use the serverless framework `serverless.yml` to define local stacks.
   * https://www.serverless.com/framework
 
+## Clone, Rename and Go
+* `git clone https://github.com/aiur100/serverless-boilerplate.git`
+* `mv serverless-boilerplate <your-app-name>`
+* `cd <your-app-name>`
+* Remove association to *this* git repo `rm -rf .git`
+
 ## Local Development
 
 Local development uses *LocalStack* to host an AWS Cloud. 

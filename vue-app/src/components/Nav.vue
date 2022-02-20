@@ -34,7 +34,7 @@ export default {
       user: null,
       page: null,
       route: null,
-      app_name: process.env.VUE_APP_SERVICE_NAME
+      app_name: process.env.VUE_APP_WEB_APP_NAME
     };
   },
   watch: {

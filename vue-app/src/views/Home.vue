@@ -36,7 +36,8 @@ export default {
     };
   },
   async beforeMount() {
-    const result = await fetch("http://localhost:3001/api/v1/health").then(r => r.json());
+    const URL = process.env.VUE_APP_API_URL;
+    const result = await fetch(URL+"/health").then(r => r.json());
     this.health = result;
   },
 };

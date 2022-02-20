@@ -6,3 +6,5 @@ const envStringToWrite = Object.keys(variables).map(variableKey => {
 }).join("\n");
 
 fs.writeFileSync(".env.development.local",envStringToWrite);
+
+console.log("Environment variables written");

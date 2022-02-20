@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "dev": "node ./localBuild.js && vue-cli-service serve",
+    "build": "vue-cli-service build --mode production"
   },
   "dependencies": {
     "bootstrap": "^5.1.3",

@@ -22,7 +22,7 @@ if(LOCAL === STAGE){
 const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
-// cors https://expressjs.com/en/resources/middleware/cors.html
+// https://expressjs.com/en/resources/middleware/cors.html
 const cors = require('cors');
 const log = require("lambda-log"); 
 log.options.dev = true;

@@ -5,9 +5,10 @@
   "scripts": {
     "sls": "serverless",
     "dev": "npx nodemon ./api/handler.js",
-    "local-cf": "./local.sh up",
+    "local-up": "./local.sh up",
     "local-down": "./local.sh down",
     "dev-deploy": "sls deploy --stage dev && node deploy.js dev",
+    "web-build": "cd vue-app && npm run build",
     "test": "mocha"
   },
   "dependencies": {

@@ -18,7 +18,7 @@ case $1 in
                                 --template-body file:///$PWD/.serverless/cloudformation-template-update-stack.json \
                                 --parameters ParameterKey=Parm1,ParameterValue=test1 ParameterKey=Parm2,ParameterValue=test2 #> /dev/null 2>&1
         npm run dev &
-        cd vue-app && npm run dev
+        cd vue-app && npm run dev &
         ;;
     down)
         aws cloudformation delete-stack \

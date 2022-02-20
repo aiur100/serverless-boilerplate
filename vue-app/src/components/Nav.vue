@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Workload</a>
+      <a class="navbar-brand" href="#">{{app_name}}</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -34,6 +34,7 @@ export default {
       user: null,
       page: null,
       route: null,
+      app_name: process.env.VUE_APP_SERVICE_NAME
     };
   },
   watch: {

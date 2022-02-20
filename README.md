@@ -63,10 +63,11 @@ definition in `serverless.yml` locally.
 
 
 ## Production / Stage Deployment
-* **REQUIRED:** A `.env.<stage>.json` is required for the stage you are deploying to. 
-* Deploying to a *dev* environment. 
-  * `npm run dev-deploy`
-  * `npm run prod-deploy`
+* **REQUIRED:** A `.env.<stage>.json` is required for the stage you are deploying to and should have 
+  variables the pertaining to that stage.  
+* Deploying to a *stage* environment. 
+  * **DEV** `npm run dev-deploy`
+  * **PROD** `npm run prod-deploy`
 
 ## TODO
 * Create a password storage flow. 

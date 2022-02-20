@@ -17,6 +17,8 @@ case $1 in
                                 --stack-name local-stack \
                                 --template-body file:///$PWD/.serverless/cloudformation-template-update-stack.json \
                                 --parameters ParameterKey=Parm1,ParameterValue=test1 ParameterKey=Parm2,ParameterValue=test2 #> /dev/null 2>&1
+        npm install
+        cd vue-app && npm install && cd ..
         npm run local-serve
         #npm run dev && cd vue-app && npm run dev
         #cd vue-app && npm run dev &

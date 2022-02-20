@@ -27,6 +27,7 @@ package:
     - '!*.json'
     - '.gitignore'
     - '!deploy.js'
+    - '!node_modules/concurrently'
 
 provider:
   name: aws

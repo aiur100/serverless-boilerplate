@@ -23,6 +23,11 @@
             >
           </li>
         </ul>
+        <form class="d-flex">
+          <router-link to="/login" tag="button" class="btn btn-outline-success" v-if="!this?.user">Login</router-link>
+          <button class="btn btn-dark disabled me-2" v-if="this?.user">User: {{this?.user?.name}}</button>
+          <button class="btn btn-outline-success" type="submit" @click.prevent="logOut()" v-if="this?.user">Log-Out</button>
+        </form>
       </div>
     </div>
   </nav>
@@ -39,8 +44,9 @@ export default {
   },
   watch: {
     "route.currentRoute": {
-      handler: function(data) {
-        console.log({ data: data?.name });
+      handler: async function(data) {
+        const users = await this.$userManager.userAttributes();
+        console.log({ data: data?.name, users });
         this.page = data?.name;
       },
       deep: true,
@@ -48,13 +54,14 @@ export default {
     },
   },
   async beforeMount() {
-    //test
-    console.log("USER",this.$userManager);
+    this.user = await this.$userManager.userAttributes();
+    this.route = this.$router;
+    this.page = this.$router.currentRoute.value.name;
   },
   methods: {
     async logOut() {
-     // await this.$userManager.logout();
-     // this.$router.go({ name: "Login", query: { message: "log out success" } });
+     await this.$userManager.logout();
+     this.$router.push({ path: '/login', replace: true });
     },
   },
 };

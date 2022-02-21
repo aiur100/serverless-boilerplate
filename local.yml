@@ -14,12 +14,23 @@ resources:
       Type: AWS::Cognito::UserPool
       Properties:
         # Generate a name based on the stage
-        UserPoolName: ${sls:stage}-user-pool
+        UserPoolName: ${file(./.env.${sls:stage}.json):SERVICE_NAME}-${sls:stage}-user-pool
+        VerificationMessageTemplate:
+          DefaultEmailOption: CONFIRM_WITH_LINK
         # Set email as an alias
         UsernameAttributes:
           - email
         AutoVerifiedAttributes:
           - email
+        Schema:
+          - Name: email
+            AttributeDataType: String
+            Mutable: false
+            Required: true
+          - Name: name
+            AttributeDataType: String
+            Mutable: true
+            Required: true
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
       Properties:
@@ -30,6 +41,11 @@ resources:
         ExplicitAuthFlows:
           - ADMIN_NO_SRP_AUTH
         GenerateSecret: false
+    UserPoolDomain:
+      Type: AWS::Cognito::UserPoolDomain
+      Properties:
+        Domain: ${file(./.env.${sls:stage}.json):SERVICE_NAME}-${sls:stage}
+        UserPoolId: !Ref CognitoUserPool
   Outputs:
     UserPoolId:
       Value:

@@ -174,10 +174,10 @@ export default {
           userNameFieldName: "email",
           password: this.password,
           name: this.name,
-          phone_number: this.cleanPhoneNumber(this.phone_number),
-          "custom:group_name": this.custom_group_name,
-          "custom:user_type": "employer",
-          "custom:group_descrip": this.group_description,
+          //phone_number: this.cleanPhoneNumber(this.phone_number),
+          //"custom:group_name": this.custom_group_name,
+          //"custom:user_type": "employer",
+          //"custom:group_descrip": this.group_description,
         })
         .then((response) => {
           console.log({ response });

@@ -98,7 +98,7 @@ export default {
         .login(this.email, this.password)
         .then((r) => {
           console.log({ response: r });
-          this.$router.go({
+          this.$router.push({
             name: "Home",
             query: { message: "login success" },
           });

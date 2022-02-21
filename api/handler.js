@@ -58,7 +58,7 @@ app.use(cors());
  */
 app.use("/api/v1/users", require("./v1/users"));
 app.get("/api/v1/health", (req, res, next) => {
-  res.json({ version: VERSION, stage: STAGE, env: process.env });
+  res.json({ version: VERSION, stage: STAGE});
 })
 
 

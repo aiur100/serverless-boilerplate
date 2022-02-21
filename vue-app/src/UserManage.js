@@ -80,12 +80,12 @@
     userAttributes(){
       return new Promise((resolve,reject)=> {
         const user = this.currentUser();
-        user.getSession(function(err) {
+        user?.getSession(function(err) {
           if (err) {
               reject(err);
               return;
           }
-          user.getUserAttributes((err,result)=> {
+          user?.getUserAttributes((err,result)=> {
             if(err){
               return reject(err);
             }

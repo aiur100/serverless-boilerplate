@@ -75,6 +75,13 @@ definition in `serverless.yml` locally.
 * Tests are in the `test` directory
 * Run tests: `npm run test`
 
+### AWS Resources
+* All AWS resources should be defined in the `./stack/` directory as `.yml` files. 
+* 
+
+### AWS Cognito Configuration
+* Your AWS Cognito configuration is defined in `./stack/cognito.yml`
+* This is the same configuration that is used for local and any other remote stage. 
 
 ## Production / Stage Deployment
 * **REQUIRED:** 
@@ -84,22 +91,18 @@ definition in `serverless.yml` locally.
   make changes so that you have unique stage variable values where needed. 
   * i.e. You should have a different
   `STATIC_BUCKET` value per environment. You can usually just prefix with `dev-`.
-* Once you have your Environment variable file configured, Deploying to a *stage* environment. 
+  * *REMOVE* the API_URL entry if you don't have a domain you want to use. 
+    * This will allow the created API gateway to be used.
+* Once you have your Environment variable file configured, Deploying to a *stage* 
+environment. 
   * **DEV** `npm run dev-deploy`
   * **PROD** `npm run prod-deploy`
   * These are the only two stages right now.  If you want another one, just create a new script in `package.json` and emulate 
     the above two scripts.
 
-## TODO
-* Create a password storage flow. 
-* Create a fake endpoint that is protected by authorization. 
-* DONE Create a command that starts up the *whole* environment
-* DONE - Figure out how to add local s3 service 
-  * DONE - Possibly this https://docs.localstack.cloud/get-started/#docker
-* Create a remove stack flow
+### Bringing down your stage deployment
 
-## Deployment flow
-* Deploy CF stack 
-* Build production ENV variables for web app
-* If API_URL is missing, go to deployed stack and add it from API Gateway Resource. 
-* If API_URL is NOT missing, simply skip the above step and add it to ENV. 
+#### `npm run dev-remove`
+#### `npm run prod-remove`
+
+

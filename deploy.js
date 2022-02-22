@@ -108,6 +108,12 @@ const runBuild = () => {
   });
 };
 
+/**
+ * Clear all contents from a given bucket. 
+ * 
+ * @param {*} Bucket 
+ * @returns 
+ */
 async function clearBucket(Bucket) {
   try {
     const s3 = new AWS.S3();
@@ -141,11 +147,13 @@ async function clearBucket(Bucket) {
 }
 
 /**
- * Main routine
+ * --------------------------------------------------------
+ * 
+ * Main deployment routine
  *
+ * --------------------------------------------------------
  */
 (async function () {
-
   if (process.argv[3] === "remove") {
     console.log("REMOVING STACK -", "SERVICE: " + variables.SERVICE_NAME);
     await clearBucket(variables.STATIC_BUCKET);
@@ -157,12 +165,13 @@ async function clearBucket(Bucket) {
     variables.SERVICE_NAME
   );
 
+  const cloudformation = new AWS.CloudFormation({ region: variables.REGION });
+
   // if no API URL is provided,
   // this means we are not using a custom domain in the configuration,
   // therefore, we need to determine what the API URL truly is and use
   // that for the web app
   if (!variables.API_URL) {
-    const cloudformation = new AWS.CloudFormation({ region: variables.REGION });
     const httpStackResponse = await cloudformation
       .describeStackResource({
         LogicalResourceId: "HttpApi",
@@ -181,6 +190,33 @@ async function clearBucket(Bucket) {
     );
     variables.API_URL = BASE_URL;
   }
+
+  /**
+   * ---------------------------------------
+   * START - Cognito Configuration Mapping to Vue
+   * ---------------------------------------
+   */
+  const userPoolIdReq = await cloudformation
+    .describeStackResource({
+      LogicalResourceId: "CognitoUserPool",
+      StackName: `${variables.SERVICE_NAME}-${variables.STAGE}`,
+    })
+    .promise();
+  const userPoolClientIdReq = await cloudformation
+    .describeStackResource({
+      LogicalResourceId: "CognitoUserPoolClient",
+      StackName: `${variables.SERVICE_NAME}-${variables.STAGE}`,
+    })
+    .promise();
+  variables.COGNITO_USER_POOL_ID =
+    userPoolIdReq["StackResourceDetail"]["PhysicalResourceId"];
+  variables.COGNITO_CLIENT_ID =
+    userPoolClientIdReq["StackResourceDetail"]["PhysicalResourceId"];
+  /**
+   * ---------------------------------------
+   * END - Cognito Configuration Mapping to Vue
+   * ---------------------------------------
+   */
 
   // write all environment variables to .env file.
   const envStringToWrite = Object.keys(variables)

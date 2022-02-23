@@ -24,9 +24,9 @@
           </li>
         </ul>
         <form class="d-flex">
-          <router-link to="/login" tag="button" class="btn btn-outline-success" v-if="!this?.user">Login</router-link>
-          <button class="btn btn-dark disabled me-2" v-if="this?.user">User: {{this?.user?.name}}</button>
-          <button class="btn btn-outline-success" type="submit" @click.prevent="logOut()" v-if="this?.user">Log-Out</button>
+          <router-link to="/login" tag="button" class="btn btn-outline-success" v-if="!this.$store?.state?.user?.name">Login</router-link>
+          <button class="btn btn-dark disabled me-2" v-if="this.$store?.state.is_logged_in">User: {{this.$store?.state?.user?.name}}</button>
+          <button class="btn btn-outline-success" type="submit" @click.prevent="logOut()" v-if="this.$store?.state.is_logged_in">Log-Out</button>
         </form>
       </div>
     </div>
@@ -45,8 +45,8 @@ export default {
   watch: {
     "route.currentRoute": {
       handler: async function(data) {
-        const users = await this.$userManager.userAttributes();
-        console.log({ data: data?.name, users });
+        //const users = await this.$userManager.userAttributes();
+        //console.log({ data: data?.name, users });
         this.page = data?.name;
       },
       deep: true,
@@ -54,15 +54,18 @@ export default {
     },
   },
   async beforeMount() {
-    this.user = await this.$userManager.userAttributes();
+   // this.user = await this.$userManager.userAttributes();
     this.route = this.$router;
     this.page = this.$router.currentRoute.value.name;
   },
   methods: {
     async logOut() {
-     await this.$userManager.logout();
+     await this.$store.dispatch('logout');
      this.$router.push({ path: '/login', replace: true });
     },
+    incrementButton(){
+      this.$store.commit('increment');
+    }
   },
 };
 </script>

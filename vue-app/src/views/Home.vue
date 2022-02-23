@@ -5,7 +5,7 @@
         <h2 class="card-title ms-3 mt-2">
           Home
           <small class="card-title m-3" style="color: grey; font-size: 16px;"
-            >{{this.user?.name ? "Hello "+this.user.name+"!" : "Hello! Login or register"}}</small
+            >{{this.$store.state.user?.name ? "Hello "+this.$store.state.user.name+"!" : "Hello! Login or register"}}</small
           >
         </h2>
 
@@ -35,7 +35,7 @@ export default {
     };
   },
   async beforeMount() {
-    this.user = await this.$userManager.userAttributes();
+    //this.user = await this.$userManager.userAttributes();
     const URL = process.env.VUE_APP_API_URL;
     const result = await fetch(URL+"/health").then(r => r.json());
     this.health = result;

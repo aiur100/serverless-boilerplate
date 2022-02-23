@@ -94,20 +94,15 @@ export default {
   methods: {
     async login() {
       this.loading = true;
-      this.$userManager
-        .login(this.email, this.password)
-        .then((r) => {
-          console.log({ response: r });
-          this.$router.push({
-            name: "Home",
-            query: { message: "login success" },
-          });
-        })
-        .catch((error) => {
-          console.error({ error });
-          this.error = error.message;
-        })
-        .finally(() => (this.loading = false));
+      try{
+        await this.$store.dispatch({
+          type: "login", email: this.email, password: this.password 
+        }).finally(() => (this.loading = false));
+        this.$router.push({ path: '/', replace: true });
+      }
+      catch(error){
+        this.error = error;
+      }
     },
   },
 };

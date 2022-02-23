@@ -167,30 +167,25 @@ export default {
     console.log("Page created successfully");
   },
   methods: {
-    register() {
-      this.$userManager
-        .register({
+    async register() {
+      try{
+        this.loading = true;
+        await this.$store.dispatch("register", {
           email: this.email,
-          userNameFieldName: "email",
           password: this.password,
           name: this.name,
-          //phone_number: this.cleanPhoneNumber(this.phone_number),
-          //"custom:group_name": this.custom_group_name,
-          //"custom:user_type": "employer",
-          //"custom:group_descrip": this.group_description,
         })
-        .then((response) => {
-          console.log({ response });
-          this.$router.push({
+        this.$router.push({
             name: "Login",
             query: { message: "login success" },
-          });
-        })
-        .catch((error) => {
+        });
+      }
+      catch(error){
           console.error(error);
           console.trace(error);
           this.error = error.message;
-        });
+          this.loading = false;
+      }
     },
     cleanPhoneNumber(phoneNumber) {
       let justNumbers = phoneNumber.match(/\d+/g).join("");

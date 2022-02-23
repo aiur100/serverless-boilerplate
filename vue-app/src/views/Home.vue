@@ -5,7 +5,7 @@
         <h2 class="card-title ms-3 mt-2">
           Home
           <small class="card-title m-3" style="color: grey; font-size: 16px;"
-            >{{this.$store.state.user?.name ? "Hello "+this.$store.state.user.name+"!" : "Hello! Login or register"}}</small
+            >{{this.$store.state.auth.user?.name ? "Hello "+this.$store.state.auth.user.name+"!" : "Hello! Login or register"}}</small
           >
         </h2>
 

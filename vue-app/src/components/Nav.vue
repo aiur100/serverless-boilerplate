@@ -24,9 +24,9 @@
           </li>
         </ul>
         <form class="d-flex">
-          <router-link to="/login" tag="button" class="btn btn-outline-success" v-if="!this.$store?.state?.user?.name">Login</router-link>
-          <button class="btn btn-dark disabled me-2" v-if="this.$store?.state.is_logged_in">User: {{this.$store?.state?.user?.name}}</button>
-          <button class="btn btn-outline-success" type="submit" @click.prevent="logOut()" v-if="this.$store?.state.is_logged_in">Log-Out</button>
+          <router-link to="/login" tag="button" class="btn btn-outline-success" v-if="!this.$store?.state?.auth?.user?.name">Login</router-link>
+          <button class="btn btn-dark disabled me-2" v-if="this.$store?.state?.auth.is_logged_in">User: {{this.$store?.state?.auth?.user?.name}}</button>
+          <button class="btn btn-outline-success" type="submit" @click.prevent="logOut()" v-if="this.$store?.state.auth?.is_logged_in">Log-Out</button>
         </form>
       </div>
     </div>

@@ -25,6 +25,7 @@ const auth = {
   },
   mutations: {
     isLoggedIn(state) {
+      console.log("is Logged IN",true);
       state.is_logged_in = true;
     },
     isNotLoggedIn(state) {
@@ -34,6 +35,7 @@ const auth = {
       state.user = null;
     },
     setUserAttributes(state, attributes) {
+      console.log("sUserAttributes",attributes);
       state.is_logged_in = true;
       state.user = attributes;
     },
@@ -63,14 +65,19 @@ const auth = {
       commit("clearUser");
     },
     async setCurrentUser({ commit }) {
+      console.log("Set CURRENT USER")
       await UserManager.userAttributes()
         .then((response) => {
+          console.log("HERE")
           commit("isLoggedIn");
           commit("setUserAttributes", response);
         })
         .catch((error) => {
           console.error("SET USER ERROR:", error);
-        });
+        }).finally(() => {
+          console.log("FINALLY")
+        })
+      return;
     },
   }
 };

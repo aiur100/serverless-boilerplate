@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">{{app_name}}</a>
+      <a class="navbar-brand" href="/">{{app_name}}</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -18,7 +18,7 @@
           <li class="nav-item">
             <router-link
               :class="this?.page === 'Home' ? 'nav-link active' : 'nav-link'"
-              to="/"
+              to="/home"
               >Home</router-link
             >
           </li>

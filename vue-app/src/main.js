@@ -13,9 +13,11 @@ const store = createStore({
   },
 });
 
-// We are setting the current user, if there is one
+const app = createApp(App);
 store.dispatch({
   type: "setCurrentUser",
+})
+.finally(()=>{
+  router.store = store;
+  app.use(store).use(router).mount("#app");
 });
-
-createApp(App).use(store).use(router).mount("#app");

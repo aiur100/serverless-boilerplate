@@ -80,6 +80,7 @@
     userAttributes(){
       return new Promise((resolve,reject)=> {
         const user = this.currentUser();
+        if(!user) reject("no user");
         user?.getSession(function(err) {
           if (err) {
               reject(err);

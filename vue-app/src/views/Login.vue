@@ -60,7 +60,8 @@
                 Login
               </button>
             </div>
-            <router-link to="register">Register</router-link>
+            <router-link to="register" class="m-2">Register</router-link>
+            <router-link to="reset-password" class="m-2">Forgot Password</router-link>
           </div>
         </form>
       </div>

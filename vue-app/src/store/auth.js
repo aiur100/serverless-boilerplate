@@ -64,20 +64,21 @@ const auth = {
       commit("isNotLoggedIn");
       commit("clearUser");
     },
+    async sendPassResetCode({ commit },email){
+      await UserManager.sendPassResetCode(email);
+    },
+    async resetPassword({ commit }, { code, email, newPassword }){
+      await UserManager.resetPassword(code,email,newPassword);
+    },
     async setCurrentUser({ commit }) {
-      console.log("Set CURRENT USER")
       await UserManager.userAttributes()
         .then((response) => {
-          console.log("HERE")
           commit("isLoggedIn");
           commit("setUserAttributes", response);
         })
         .catch((error) => {
           console.error("SET USER ERROR:", error);
-        }).finally(() => {
-          console.log("FINALLY")
-        })
-      return;
+        });
     },
   }
 };

@@ -61,6 +61,40 @@
         });
       });
     }
+
+    sendPassResetCode(email){
+      return new Promise((resolve, reject) => {
+        const cognitoUser = new this.#mCognito.CognitoUser({
+          Username: email,
+          Pool: this.userPool(),
+        });
+        cognitoUser.forgotPassword({
+          onSuccess: function(result) {
+            resolve(result);
+          },
+          onFailure: function(err) {
+            reject(err);
+          },
+        });
+      });
+    }
+
+    resetPassword(verificationCode,email,password){
+      return new Promise((resolve, reject) => {
+        const cognitoUser = new this.#mCognito.CognitoUser({
+          Username: email,
+          Pool: this.userPool(),
+        });
+        cognitoUser.confirmPassword(verificationCode,password,{
+          onSuccess: function(result) {
+            resolve(result);
+          },
+          onFailure: function(err) {
+            reject(err);
+          },
+        });
+      });
+    }
   
     /**
      * If you are logged in, this will return

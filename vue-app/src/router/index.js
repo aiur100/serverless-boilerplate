@@ -3,6 +3,7 @@ import Home from "/src/views/Home.vue";
 import Register from "/src/views/Register.vue";
 import Login from "/src/views/Login.vue";
 import Hero from "/src/views/Hero.vue";
+import PasswordReset from "/src/views/PasswordReset.vue";
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
     name: "Login",
     component: Login,
   },
+  {
+    path: "/reset-password",
+    name: "ResetPassword",
+    component: PasswordReset,
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
@@ -35,7 +41,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log("Router");
+
   if (
     to.matched.some((record) => record.meta.requiresLogin) &&
     !router.store.state.auth.is_logged_in

@@ -114,8 +114,8 @@
                 Reset Password
               </button>
             </div>
-            <router-link to="register">Register</router-link>
-            <router-link to="login">Login</router-link>
+            <router-link to="register" class="m-2">Register</router-link>
+            <router-link to="login" class="m-2">Login</router-link>
           </div>
         </form>
       </div>
